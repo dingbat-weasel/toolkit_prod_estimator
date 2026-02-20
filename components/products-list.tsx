@@ -18,14 +18,32 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { useState } from 'react';
+import { Dialog, DialogContent } from './ui/dialog';
+import ProductForm from './product-form';
 
 type Props = {
   products: Tables<'products'>[];
 };
 
 export default function ProductsList({ products }: Props) {
+  const [editingProduct, setEditingProduct] =
+    useState<Tables<'products'> | null>(null);
+
   return (
     <div>
+      <Dialog
+        open={editingProduct !== null}
+        onOpenChange={(open) => {
+          if (!open) setEditingProduct(null);
+        }}
+      >
+        <form>
+          <DialogContent>
+            <ProductForm key={editingProduct?.id} product={editingProduct} />
+          </DialogContent>
+        </form>
+      </Dialog>
       <Table>
         <TableHeader>
           <TableRow>
