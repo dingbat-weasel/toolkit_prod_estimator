@@ -1,11 +1,18 @@
 'use client';
 import type { Tables } from '@/database.types';
+import { Button } from './ui/button';
 import { MoreHorizontalIcon } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -31,9 +38,24 @@ export default function ProductsList({ products }: Props) {
           {products.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.piece_name}</TableCell>
-              <TableCell>{item.piece_rate}</TableCell>
-              <TableCell>
-                <MoreHorizontalIcon />
+              <TableCell className='text-center'>{item.piece_rate}</TableCell>
+              <TableCell className='text-center'>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant='ghost' size='icon' className='size-8'>
+                      <MoreHorizontalIcon />
+                      <span className='sr-only'>Open menu</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                    <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className='text-destructive'>
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </TableCell>
             </TableRow>
           ))}
